@@ -1,0 +1,16 @@
+{% set title = "Rekisteröidy mukaan" %}
+
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Oletko valmis luomaan oman turnauksen ja haastamaan ystäväsi? Rekisteröidy ja olet mukana</h2>
+	<form method=POST>
+		{% for field in form %}
+			{% if not field.flags.hidden %}
+				<p>{{ field.label }}</p>
+			{% endif %}
+				<p>{{ field }}</p>
+		{% endfor %}
+		<input type="submit" value={{ button }}>
+	</form>
+{% endblock content %}

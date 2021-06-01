@@ -1,0 +1,36 @@
+{% if not title %}
+{% set title = "Hegemooniset Änärit!" %}
+{% endif %}
+
+<!DOCTYPE html>
+<html lang=en>
+	<head>
+		<title>{{ title }}</title>
+		<meta charset="utf-8">
+		<meta name=viewport content="width=device-width initial scale=1">
+	</head>
+	<body>
+		<nav>
+			{% if not currentUser() %}
+			<a href="/">Etusivu</a> -
+			<a href="/users/login">Kirjaudu</a> -
+			<a href="/users/register">Rekisteröidy</a>			
+			{% else %}
+			<a href="/">Etusivu</a> -
+			<a href="/users/logout">Kirjaudu ulos</a> -
+			<a href="/tournament/add">Luo uusi turnaus</a>
+			<p><b>Kirjautuneena: {{ currentUser() }}</b></p>
+			{% endif %}
+		</nav>
+
+		{% for msg in get_flashed_messages() %}
+			<p><b>{{ msg }}</b></p>
+		{% endfor %}
+		
+		<h1>{{ title }}</h1>
+
+		{% block content %}
+
+		{% endblock content %}
+	</body>
+</html>

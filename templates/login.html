@@ -1,0 +1,19 @@
+{% set title = "Kirjaudu" %}
+
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Kirjaudu ja pelit jatkuu</h2>
+	<form method=POST>
+		{% for field in form %}
+			 {% if not field.label=='name' %}			
+				{% if not field.flags.hidden %}
+					<p>{{ field.label }}</p>
+				{% endif %}
+					<p>{{ field }}</p>
+					<b>{{ err }}</b>
+			{% endif %}
+		{% endfor %}
+		<input type="submit" value={{ button }}>
+	</form>
+{% endblock content %}

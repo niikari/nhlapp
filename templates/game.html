@@ -1,0 +1,12 @@
+{% set title = "Turnausjärjestys" %}
+
+{% extends "base.html" %}
+
+{% block content %}
+	<p><b>Turnaus: "{{ tournament }}"</b></p>
+	{% for game in games %}
+		<p>{{ game }}</p>
+	{% endfor %}
+
+	<a href="/tournament/delete/{{ id }}">Poista turnaus</a>
+{% endblock content %}

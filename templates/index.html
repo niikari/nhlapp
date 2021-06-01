@@ -1,0 +1,16 @@
+{% set title = "NHL21 turnaus helposti" %}
+
+{% extends "base.html" %}
+
+{% block content %}
+	{% if tournaments %}
+		<p><b>Turnaukseni</b></p>
+		<ul>
+			{% for tournament in tournaments %}
+				<a href="/tournament/game/{{ tournament.id }}"><li>{{ tournament.name }}</li></a>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p><b>Ei vielä turnauksia, kirjaudu ja näet omasi!</b></p>	
+	{% endif %}
+{% endblock content %}
