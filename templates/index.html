@@ -3,14 +3,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-	{% if tournaments %}
-		<p><b>Turnaukseni</b></p>
-		<ul>
-			{% for tournament in tournaments %}
-				<a href="/tournament/game/{{ tournament.id }}"><li>{{ tournament.name }}</li></a>
-			{% endfor %}
-		</ul>
-	{% else %}
-		<p><b>Ei vielä turnauksia, kirjaudu ja näet omasi!</b></p>	
+	{% if not currentUser() %}
+		<p>Oletko sinäkin pelannut kavereidesi kanssa NHL (Änäri) peliä turnausmuodossa? 5 pelaajaa ja kaksinkertainen sarja?
+			Eikö olekkin turhauttavaa tehdä ja keksiä aina uudelleen ja uudelleen pelijärjestys, aikatauluttaa pelit sekä pitää kirjaa tuloksista.
+			<br><br><b>Ratkaisu on tässä!</b>Rekisteröidy, se on liaankin helppoa ja ohjelma luo sinulle turnaukset valmiina ja ei muuta kuin pelaamaan! </p>
+		{% else %}
+		{% if tournaments %}
+			<p><b>Turnaukseni</b></p>
+			<!-- <ul>
+				{% for tournament in tournaments %}
+					<a href="/tournament/game/{{ tournament.id }}"><li>{{ tournament.name }}</li></a>
+				{% endfor %}
+			</ul> -->
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<td>Nimi</td>
+						<td>Aloitettu pvm.</td>
+						<td></td>
+					</tr>
+				</thead>
+				<tbody>
+					{% for tournament in tournaments %}					
+						<tr>
+							<td>{{ tournament.name }}</td>
+							<td>{{ tournament.created }}</td>
+							<td><a href="/tournament/game/{{ tournament.id }}">Siirry turnaukseen</a></td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<p>Ei turnauksia vielä, luo uusi turnaus</p>	
+		{% endif %}
 	{% endif %}
 {% endblock content %}

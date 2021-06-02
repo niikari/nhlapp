@@ -8,6 +8,8 @@ from wtforms.ext.sqlalchemy.orm import model_form
 from wtforms import StringField, PasswordField, validators, IntegerField
 from werkzeug.security import generate_password_hash, check_password_hash
 
+from datetime import datetime
+
 app = Flask(__name__)
 app.secret_key = "ib)aht~eiJu%h=oopoing7de0ca9eingieLaeth"
 #app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql:///niileswsgi'
@@ -37,7 +39,7 @@ class Tournament(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Integer, nullable=False)
     players = db.Column(db.Integer, nullable=False) # eli kuinka monta pelaajaa turnauksessa
-    
+    created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('users', lazy=True))
@@ -57,16 +59,6 @@ class Player(db.Model):
 
     def __repr__(self):
         return self.name
-
-#class Game(db.Model):
-#    id = db.Column(db.Integer, primary_key=True)
-#    points = db.Column(db.Integer)
-#    
-#    player_id = db.Column(db.Integer, db.ForeignKey('player.id'), nullable=False)
-#    player = db.relationship('Player', backref=db.backref('games', lazy=True))
-#
-#    tournament_id = db.Column(db.Integer, db.ForeignKey('tournament.id'), nullable=False)
-#    tournament = db.relationship('Tournament', backref=db.backref('games', lazy=True))
 
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)

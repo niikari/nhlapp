@@ -9,6 +9,6 @@
 		{% for player in range(1, players+1) %}
 			<p><input type=text name="{{ player }}" placeholder="pelaaja {{ player }}"></p>		
 		{% endfor %}
-		<input type="submit" value={{ button }}>
+		<input type="submit" value={{ button }} class="btn btn-primary">
 	</form>
 {% endblock content %}

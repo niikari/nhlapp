@@ -6,11 +6,13 @@
 <h2>Oletko valmis luomaan oman turnauksen ja haastamaan ystäväsi? Rekisteröidy ja olet mukana</h2>
 	<form method=POST>
 		{% for field in form %}
+		<div class="form-group">
 			{% if not field.flags.hidden %}
-				<p>{{ field.label }}</p>
+				{{ field.label }}
 			{% endif %}
-				<p>{{ field }}</p>
+				{{ field }}
+		</div>
 		{% endfor %}
-		<input type="submit" value={{ button }}>
+		<input type="submit" value={{ button }} class="btn btn-primary">
 	</form>
 {% endblock content %}

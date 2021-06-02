@@ -3,17 +3,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Kirjaudu ja pelit jatkuu</h2>
+<h2>...ja pelit jatkuu</h2>
 	<form method=POST>
 		{% for field in form %}
+			<div class="form-group">
 			 {% if not field.label=='name' %}			
 				{% if not field.flags.hidden %}
-					<p>{{ field.label }}</p>
+					{{ field.label }}
 				{% endif %}
-					<p>{{ field }}</p>
+					{{ field }}
 					<b>{{ err }}</b>
 			{% endif %}
+			</div>
 		{% endfor %}
-		<input type="submit" value={{ button }}>
+		<input type="submit" value={{ button }} class="btn btn-primary">
 	</form>
 {% endblock content %}
