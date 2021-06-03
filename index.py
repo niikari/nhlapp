@@ -10,6 +10,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from datetime import datetime
 
+
+
 app = Flask(__name__)
 app.secret_key = "ib)aht~eiJu%h=oopoing7de0ca9eingieLaeth"
 #app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql:///niileswsgi'
@@ -43,8 +45,6 @@ class Tournament(db.Model):
     
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('users', lazy=True))
-    
-#TournamentForm = model_form(Tournament, base_class=FlaskForm, db_session = db.session)
 
 class TournamentForm(FlaskForm):
     name = StringField("Turnauksen nimi", validators=[validators.InputRequired("Nimi on pakollinen")])
@@ -62,37 +62,15 @@ class Player(db.Model):
 
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    winner = db.Column(db.Integer)
-    points = db.Column(db.Integer)
-    player1 = db.Column(db.Integer)
-    player2 = db.Column(db.Integer)
-    score = db.Column(db.String, default='0 - 0')
-    
+    goals = db.Column(db.Integer, default=0)
+
+    player_id = db.Column(db.Integer, db.ForeignKey('player.id'), nullable=False)
+    player = db.relationship('Player', backref=db.backref('players', lazy=True))
 
 @app.before_first_request
 def initDb():
     db.create_all()
-    user = User()
-    user.username = 'admin'
-    user.setPassword('admin')
-    user.role = 'admin'
-    db.session.add(user)
-
-    user2 = User()
-    user2.username = 'tomi'
-    user2.setPassword('tomi')
-    db.session.add(user2)
-
-    tournament = Tournament(name="Hegistä", user=user, players=3)
-    db.session.add(tournament)
-
-    player = Player(name="pelaaja1", tournament = tournament)
-    db.session.add(player)
-
-    player2 = Player(name="pelaaja2", tournament=tournament)
-    db.session.add(player2)
     
-    db.session.commit()
 
 # käyttäjiä varten polkuja ja tietojen lisäämistä
 @app.route("/users/register", methods=["GET", "POST"])
@@ -227,17 +205,14 @@ def editTournament(id):
 @app.route("/tournament/game/<int:id>")
 def tournamentGames(id):
     loginRequired()
-    players = getPlayers(id)
-    tournament = Tournament.query.get_or_404(id)
-    games = []
-    
-    for player in players:
-        games.append(player)
-    
-    # alla testiä varten
-    
+    #players = getPlayers(id)
+    #tournament = Tournament.query.get_or_404(id)
+    #games = []
+    #
     #for player in players:
-    #    game = Game(player1 = player.name)                                
+    #    games.append(player)
+    
+    games = Game.query.all()                               
     
     return render_template("game.html", tournament = tournament.name, games = games, id = id)
 
@@ -271,7 +246,7 @@ def error404(e):
     return redirect("/")
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
 
 
 
